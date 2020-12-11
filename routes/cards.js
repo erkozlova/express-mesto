@@ -4,11 +4,11 @@ const fs = require('fs');
 router.get('/cards', (req, res) => {
   fs.readFile('./data/cards.json', (err, cards) => {
     if (err) {
-      res.send({ message: 'Ошибки при считывании файла' });
+      res.status(500).send({ message: 'Ошибки при считывании файла' });
       return;
     }
 
-    res.send(cards);
+    res.json(cards);
   });
 });
 
