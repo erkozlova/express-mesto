@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const path = require('path');
 const fs = require('fs');
 
 router.get('/users', (req, res) => {
-  fs.readFile('./data/users.json', (err, users) => {
+  fs.readFile(path.join('data', 'users.json'), (err, users) => {
     if (err) {
       res.status(500).send({ message: 'Ошибки при считывании файла' });
       return;
@@ -15,7 +16,7 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id', (req, res) => {
-  fs.readFile('./data/users.json', (err, users) => {
+  fs.readFile(path.join('data', 'users.json'), (err, users) => {
     if (err) {
       res.status(500).send({ message: 'Ошибки при считывании файла' });
       return;
