@@ -8,7 +8,9 @@ router.get('/users', (req, res) => {
       return;
     }
 
-    res.json(users);
+    const usersObj = JSON.parse(users);
+
+    res.json(usersObj);
   });
 });
 

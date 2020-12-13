@@ -8,7 +8,9 @@ router.get('/cards', (req, res) => {
       return;
     }
 
-    res.json(cards);
+    const cardsObj = JSON.parse(cards);
+
+    res.json(cardsObj);
   });
 });
 
