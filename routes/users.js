@@ -1,37 +1,17 @@
 const router = require('express').Router();
-const path = require('path');
-const fs = require('fs');
 
-router.get('/users', (req, res) => {
-  fs.readFile(path.join('data', 'users.json'), (err, users) => {
-    if (err) {
-      res.status(500).send({ message: 'Ошибки при считывании файла' });
-      return;
-    }
+const {
+  getUsers,
+  getUserById,
+  createUser,
+  undateUser,
+  updateAvatar,
+} = require('../controllers/users');
 
-    const usersObj = JSON.parse(users);
-
-    res.json(usersObj);
-  });
-});
-
-router.get('/users/:id', (req, res) => {
-  fs.readFile(path.join('data', 'users.json'), (err, users) => {
-    if (err) {
-      res.status(500).send({ message: 'Ошибки при считывании файла' });
-      return;
-    }
-
-    const user = JSON.parse(users).filter((item) => item._id === req.params.id)[0];
-
-    if (!user) {
-      res.status(404).send({ message: 'Нет пользователя с таким id' });
-
-      return;
-    }
-
-    res.json(user);
-  });
-});
+router.get('/users', getUsers);
+router.get('/users/:id', getUserById);
+router.post('/users', createUser);
+router.patch('/users/me', undateUser);
+router.patch('/users/me/avatar', updateAvatar);
 
 module.exports = router;
