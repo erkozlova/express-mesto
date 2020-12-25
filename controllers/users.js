@@ -2,11 +2,9 @@ const User = require('../models/user');
 
 module.exports.getUsers = (req, res) => {
   User.find({})
+    .orFail(() => res.status(404).send({ message: 'Пользователи не найдены' }))
     .then((users) => {
-      if (users !== null) {
-        res.send({ data: users });
-      }
-      res.status(404).send({ message: 'Пользователи не найдены' });
+      res.send({ data: users });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -18,11 +16,9 @@ module.exports.getUsers = (req, res) => {
 
 module.exports.getUserById = (req, res) => {
   User.findById(req.params.id)
+    .orFail(() => res.status(404).send({ message: 'Пользователь не найден' }))
     .then((user) => {
-      if (user !== null) {
-        res.send({ data: user });
-      }
-      res.status(404).send({ message: 'Пользователь не найден' });
+      res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -52,8 +48,8 @@ module.exports.undateUser = (req, res) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     })
+    .orFail(() => res.status(404).send({ message: 'Пользователь не найден' }))
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -70,8 +66,8 @@ module.exports.updateAvatar = (req, res) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     })
+    .orFail(() => res.status(404).send({ message: 'Пользователь не найден' }))
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {

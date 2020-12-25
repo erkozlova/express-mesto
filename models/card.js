@@ -11,7 +11,7 @@ const cardSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(v) {
-        const regex = /https*:\/\/[0-9A-z[\]@!$&'()*+,;=\-._~:/?#]+/;
+        const regex = /^https?:\/\/(?:[a-z0-9-_/]+\.)+[a-z0-9_-]+([a-zA-Z0-9-/?#[\]@!$&'()*+,;=_~:.]+)?$/;
         return regex.test(v);
       },
       message: 'Ввод неверен',
